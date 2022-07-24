@@ -5,6 +5,12 @@
 
 import Rails from "@rails/ujs"
 import * as ActiveStorage from "@rails/activestorage"
+require('@rails/ujs').start();
+require('turbolinks').start();
+require('@rails/activestorage').start();
+require('channels');
+
+require('../src/index');
 
 Rails.start()
 ActiveStorage.start()

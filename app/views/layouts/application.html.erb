@@ -11,6 +11,23 @@
   </head>
 
   <body>
+  <div class="flex-container">
+    <header>
+    <nav>
+      <% if @current_user&.admin? %>
+        <%= link_to "Users", users_path %> |
+        <%= link_to "Roles", roles_path %> |
+        <%= link_to "Stores", stores_path %> |
+        <%= link_to "Products", products_path %> |
+        <%= link_to "Favorites", favorites_path %>
+      <% end %>
+      <% if @current_user&.regular? %>
+        <%= link_to "Stores", stores_path %> |
+        <%= link_to "Products", products_path %> |
+        <%= link_to "Favorites", favorites_path %>
+      <% end %>
+    </nav>
+
   <% if user_signed_in? %>
     Signed in as <%= current_user.email %>. Not you?
     <%= link_to "Edit profile", edit_user_registration_path %>
@@ -19,10 +36,14 @@
     <%= link_to "Sign up", new_user_registration_path %> or
     <%= link_to "sign in", new_user_session_path %>
   <% end %>
+    </header>
 
   <% flash.each do |name, msg| %>
     <%= content_tag :div, msg, id: "flash_#{name}" %>
   <% end %>
-    <%= yield %>
+    <main>
+      <%= yield %>
+    </main>
+  </div>
   </body>
 </html>

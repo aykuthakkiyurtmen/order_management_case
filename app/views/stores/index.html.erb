@@ -15,8 +15,12 @@
       <tr>
         <td><%= store.name %></td>
         <td><%= link_to 'Show', store %></td>
-        <td><%= link_to 'Edit', edit_store_path(store) %></td>
+        <% if can? :update, store %>
+          <td><%= link_to 'Edit', edit_store_path(store) %></td>
+        <% end %>
+        <% if can? :destroy, store %>
         <td><%= link_to 'Destroy', store, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% end %>
       </tr>
     <% end %>
   </tbody>
@@ -24,4 +28,6 @@
 
 <br>
 
+<% if can? :create, @store %>
 <%= link_to 'New Store', new_store_path %>
+<% end %>

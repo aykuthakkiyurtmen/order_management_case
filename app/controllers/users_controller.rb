@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   before_action :authenticate_user!
+  load_and_authorize_resource
   before_action :set_user, only: [:show, :edit, :update, :destroy]
 
   # GET /users
@@ -33,7 +34,18 @@ class UsersController < ApplicationController
 
   # PATCH/PUT /users/1
   def update
-    if @user.update(user_params)
+    if user_params[:password].blank?
+      user_params.delete(:password)
+      user_params.delete(:password_confirmation)
+    end
+
+    successfully_updated = if needs_password?(@user, user_params)
+                             @user.update(user_params)
+                           else
+                             @user.update_without_password(user_params)
+                           end
+
+    if successfully_updated
       redirect_to @user, notice: 'User was successfully updated.'
     else
       render :edit
@@ -48,12 +60,22 @@ class UsersController < ApplicationController
 
   private
     # Use callbacks to share common setup or constraints between actions.
-    def set_user
-      @user = User.find(params[:id])
-    end
+  def set_user
+    @user = User.find(params[:id])
+  end
 
     # Only allow a list of trusted parameters through.
-    def user_params
-      params.require(:user).permit(:name)
-    end
+  def user_params
+    params.require(:user).permit(
+      :email,
+      :password,
+      :password_confirmation,
+      :name,
+      :role_id
+    )
+  end
+
+  def needs_password?(_user, params)
+    params[:password].present?
+  end
 end

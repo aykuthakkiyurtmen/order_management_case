@@ -5,5 +5,7 @@
   <%= @store.name %>
 </p>
 
-<%= link_to 'Edit', edit_store_path(@store) %> |
+<% if can? :update, @store %>
+  <%= link_to 'Edit', edit_store_path(@store) %> |
+<% end %>
 <%= link_to 'Back', stores_path %>
