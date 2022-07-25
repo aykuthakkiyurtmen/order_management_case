@@ -5,6 +5,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
   belongs_to :role, optional: true
   has_many :favorites
+  has_many :likes
 
   validates :name, presence: true
   before_save :assign_role

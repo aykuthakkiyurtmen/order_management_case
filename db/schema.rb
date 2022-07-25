@@ -10,20 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_07_23_181559) do
+ActiveRecord::Schema.define(version: 2022_07_25_031118) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "favorites", force: :cascade do |t|
+  create_table "likes", force: :cascade do |t|
     t.bigint "user_id", null: false
-    t.bigint "store_id"
-    t.bigint "product_id"
+    t.bigint "likeable_id", null: false
+    t.string "likeable_type"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["product_id"], name: "index_favorites_on_product_id"
-    t.index ["store_id"], name: "index_favorites_on_store_id"
-    t.index ["user_id"], name: "index_favorites_on_user_id"
+    t.index ["likeable_id", "likeable_type"], name: "index_likes_on_likeable_id_and_likeable_type"
+    t.index ["user_id", "likeable_id", "likeable_type"], name: "index_likes_on_user_id_and_likeable_id_and_likeable_type", unique: true
   end
 
   create_table "products", force: :cascade do |t|
@@ -66,9 +65,6 @@ ActiveRecord::Schema.define(version: 2022_07_23_181559) do
     t.index ["role_id"], name: "index_users_on_role_id"
   end
 
-  add_foreign_key "favorites", "products"
-  add_foreign_key "favorites", "stores"
-  add_foreign_key "favorites", "users"
   add_foreign_key "products", "stores"
   add_foreign_key "stores", "users"
   add_foreign_key "users", "roles"

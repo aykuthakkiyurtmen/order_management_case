@@ -5,6 +5,20 @@
   <%= @store.name %>
 </p>
 
+<% like = current_user.likes.find_by(likeable: @store) %>
+<% if like.nil? %>
+  <form action="/likes" method="post">
+    <input type="hidden" name="like[likeable_id]" value="<%= @store.id %>">
+    <input type="hidden" name="like[likeable_type]" value="Store">
+    <input type="submit" value="Like">
+  </form>
+<% else %>
+  <form action="<%= like_path(like) %>" method="post">
+    <input type="hidden" name="like[likeable_id]" value="<% @store.id %>">
+    <input type="hidden" name="_method" value="DELETE">
+    <input type="submit" value="Unlike">
+  </form>
+<% end %>
 <% if can? :update, @store %>
   <%= link_to 'Edit', edit_store_path(@store) %> |
 <% end %>

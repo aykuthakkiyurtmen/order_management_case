@@ -1,5 +1,5 @@
 class Store < ApplicationRecord
   belongs_to :user
   has_many :products
-  has_many :favorites
+  has_many :likes, as: :likeable
 end

@@ -5,6 +5,21 @@
   <%= @product.name %>
 </p>
 
+<% like = current_user.likes.find_by(likeable: @product) %>
+<% if like.nil? %>
+  <form action="/likes" method="post">
+    <input type="hidden" name="like[likeable_id]" value="<%= @product.id %>">
+    <input type="hidden" name="like[likeable_type]" value="Product">
+    <input type="submit" value="Like">
+  </form>
+<% else %>
+  <form action="<%= like_path(like) %>" method="post">
+    <input type="hidden" name="like[likeable_id]" value="<% @product.id %>">
+    <input type="hidden" name="_method" value="DELETE">
+    <input type="submit" value="Unlike">
+  </form>
+<% end %>
+
 <p>
   <strong>Description:</strong>
   <%= @product.description %>

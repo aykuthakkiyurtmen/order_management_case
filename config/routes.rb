@@ -4,6 +4,7 @@ Rails.application.routes.draw do
     resources :users
   end
   resources :favorites
+  resources :likes
   resources :products
   resources :stores
   resources :users

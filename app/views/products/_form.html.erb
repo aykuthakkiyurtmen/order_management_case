@@ -26,6 +26,8 @@
     <%= form.text_field :price %>
   </div>
 
+  <%= form.select( :store_id,  Store.all.collect {|p| [ p.name, p.id ] }, {include_blank: 'Select Store'})%>
+
   <div class="actions">
     <%= form.submit %>
   </div>
