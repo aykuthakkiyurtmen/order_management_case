@@ -48,8 +48,6 @@ class ProductsController < ApplicationController
 
   # DELETE /products/1
   def destroy
-    p "testtt"
-    p @product
     @product.destroy
     redirect_to products_url, notice: 'Product was successfully destroyed.'
   end
