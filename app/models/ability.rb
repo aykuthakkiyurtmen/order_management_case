@@ -9,7 +9,7 @@ class Ability
     elsif user.regular?
       can :read, Store
       can :read, Product
-      can :manage, Favorite
+      can :manage, Like
     end
   end
 end
