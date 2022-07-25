@@ -1,7 +1,7 @@
 class RolesController < ApplicationController
   before_action :authenticate_user!
-  load_and_authorize_resource
   before_action :set_role, only: [:show, :edit, :update, :destroy]
+  load_and_authorize_resource
 
   # GET /roles
   def index

@@ -4,11 +4,12 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
   belongs_to :role, optional: true
-  has_many :favorites
   has_many :likes
-  has_many :stores, dependent: :delete_all
+  has_many :stores, dependent: :destroy
+  has_many :products, dependent: :destroy
 
-  validates :name, presence: true
+  validates :name, length: { minimum: 4, maximum: 20 }, presence: true
+  validates_format_of :name, :with => Form.name_pattern
   before_save :assign_role
 
   def assign_role

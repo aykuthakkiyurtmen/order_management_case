@@ -1,7 +1,7 @@
 class ProductsController < ApplicationController
   before_action :authenticate_user!
-  load_and_authorize_resource
   before_action :set_product, only: [:show, :edit, :update, :destroy]
+  load_and_authorize_resource
 
   # GET /products
   def index
@@ -28,6 +28,7 @@ class ProductsController < ApplicationController
   # POST /products
   def create
     @product = Product.new(product_params)
+    @product.user_id = current_user.id
 
     if @product.save
       redirect_to @product, notice: 'Product was successfully created.'
@@ -47,6 +48,8 @@ class ProductsController < ApplicationController
 
   # DELETE /products/1
   def destroy
+    p "testtt"
+    p @product
     @product.destroy
     redirect_to products_url, notice: 'Product was successfully destroyed.'
   end

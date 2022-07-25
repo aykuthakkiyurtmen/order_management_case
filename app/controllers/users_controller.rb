@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   before_action :authenticate_user!
-  load_and_authorize_resource
   before_action :set_user, only: [:show, :edit, :update, :destroy]
+  load_and_authorize_resource
 
   # GET /users
   def index
@@ -9,8 +9,7 @@ class UsersController < ApplicationController
   end
 
   # GET /users/1
-  def show
-  end
+  def show; end
 
   # GET /users/new
   def new
@@ -18,8 +17,7 @@ class UsersController < ApplicationController
   end
 
   # GET /users/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /users
   def create

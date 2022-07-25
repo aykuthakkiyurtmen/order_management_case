@@ -19,10 +19,12 @@
         <%= link_to "Roles", roles_path %> |
         <%= link_to "Stores", stores_path %> |
         <%= link_to "Products", products_path %> |
+        <%= link_to "Likes", likes_path %> |
       <% end %>
       <% if @current_user&.regular? %>
         <%= link_to "Stores", stores_path %> |
         <%= link_to "Products", products_path %> |
+        <%= link_to "Likes", likes_path %> |
       <% end %>
     </nav>
 

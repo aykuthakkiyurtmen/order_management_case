@@ -1,7 +1,7 @@
 class StoresController < ApplicationController
   before_action :authenticate_user!
-  load_and_authorize_resource
   before_action :set_store, only: [:show, :edit, :update, :destroy]
+  load_and_authorize_resource
 
   # GET /stores
   def index
@@ -13,8 +13,7 @@ class StoresController < ApplicationController
   end
 
   # GET /stores/1
-  def show
-  end
+  def show; end
 
   # GET /stores/new
   def new
@@ -22,8 +21,7 @@ class StoresController < ApplicationController
   end
 
   # GET /stores/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /stores
   def create

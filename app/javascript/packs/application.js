@@ -5,6 +5,8 @@
 
 import Rails from "@rails/ujs"
 import * as ActiveStorage from "@rails/activestorage"
+//= require jquery
+//= require jquery_ujs
 require('@rails/ujs').start();
 require('turbolinks').start();
 require('@rails/activestorage').start();
