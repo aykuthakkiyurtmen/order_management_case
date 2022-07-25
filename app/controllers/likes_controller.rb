@@ -1,4 +1,5 @@
 class LikesController < ApplicationController
+  skip_before_action :verify_authenticity_token
   before_action :authenticate_user!
   load_and_authorize_resource
   before_action :set_likes, only: [:index]
@@ -26,8 +27,8 @@ class LikesController < ApplicationController
   private
 
   def set_likes
-    @like_products = Product.joins(:likes)
-    @like_stores = Store.joins(:likes)
+    @like_products = current_user.products.joins(:likes)
+    @like_stores = current_user.stores.joins(:likes)
   end
 
   # Only allow a list of trusted parameters through.
