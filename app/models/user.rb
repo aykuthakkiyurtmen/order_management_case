@@ -6,6 +6,7 @@ class User < ApplicationRecord
   belongs_to :role, optional: true
   has_many :favorites
   has_many :likes
+  has_many :stores, dependent: :delete_all
 
   validates :name, presence: true
   before_save :assign_role

@@ -5,7 +5,11 @@ class ProductsController < ApplicationController
 
   # GET /products
   def index
-    @products = Product.all
+    @products = if current_user.admin?
+                  current_user.products.all
+                else
+                  Product.all
+                end
   end
 
   # GET /products/1
@@ -49,12 +53,12 @@ class ProductsController < ApplicationController
 
   private
     # Use callbacks to share common setup or constraints between actions.
-    def set_product
-      @product = Product.find(params[:id])
-    end
+  def set_product
+    @product = Product.find(params[:id])
+  end
 
     # Only allow a list of trusted parameters through.
-    def product_params
-      params.require(:product).permit(:name, :description, :price, :store_id)
-    end
+  def product_params
+    params.require(:product).permit(:name, :description, :price, :store_id)
+  end
 end

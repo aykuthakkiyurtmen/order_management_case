@@ -5,7 +5,11 @@ class StoresController < ApplicationController
 
   # GET /stores
   def index
-    @stores = Store.all
+    @stores = if current_user.admin?
+                current_user.stores.all
+              else
+                Store.all
+             end
   end
 
   # GET /stores/1
@@ -50,12 +54,12 @@ class StoresController < ApplicationController
 
   private
     # Use callbacks to share common setup or constraints between actions.
-    def set_store
-      @store = Store.find(params[:id])
-    end
+  def set_store
+    @store = Store.find(params[:id])
+  end
 
     # Only allow a list of trusted parameters through.
-    def store_params
-      params.require(:store).permit(:name)
-    end
+  def store_params
+    params.require(:store).permit(:name)
+  end
 end
