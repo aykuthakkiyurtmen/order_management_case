@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   resources :stores
   resources :users
   resources :roles
+  resources :favorites
   post "/login", to: "sessions#login"
 
   root to: 'stores#index'
