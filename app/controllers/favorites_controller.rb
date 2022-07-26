@@ -1,10 +1,12 @@
 class FavoritesController < ActionController::API
-  include JwtAuthHelper
   include ErrorHandling
+  include JwtAuthHelper
+
   before_action :authentication!
 
   def create
     user = User.find(@user.id)
+
     return render json: no_type_error if get_likeable_id.nil?
 
     like = user.likes.new(likeable_id: get_likeable_id, likeable_type: params[:likeable_type])
@@ -14,7 +16,7 @@ class FavoritesController < ActionController::API
     return render json: exist_like_error if exist?(like.likeable_id)
 
     if !like.save
-      render json: { status: 'error', code: 3000, message: 'Can' }
+      render json: unknown_error
     else
       render json: FavoriteSerializer.new(like).serializable_hash, status: :created
     end
@@ -24,14 +26,14 @@ class FavoritesController < ActionController::API
 
   def get_likeable_id
     case params[:likeable_type]
-    when 'Store'
+    when Constants::STORE
       store = Store.find_by_name(params[:name])
       store&.id
-    when 'Product'
-      product = Product.find_by_name(params[:name]).id
+    when Constants::PRODUCT
+      product = Product.find_by_name(params[:name])
       product&.id
     else
-      'fail'
+      Constants::FAIL
     end
   end
 end

@@ -27,11 +27,14 @@ class LikesController < ApplicationController
   private
 
   def set_likes
-    @like_products = current_user.products.joins(:likes)
-    @like_stores = current_user.stores.joins(:likes)
+    if current_user.admin?
+      @like_products = current_user.products.joins(:likes)
+      @like_stores = current_user.stores.joins(:likes)
+    end
+    @like_products = Product.joins(:likes)
+    @like_stores = Store.joins(:likes)
   end
 
-  # Only allow a list of trusted parameters through.
   def like_params
     params.require(:like).permit(:likeable_id, :likeable_type)
   end

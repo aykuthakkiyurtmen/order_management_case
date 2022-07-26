@@ -10,7 +10,7 @@ class SessionsController < ActionController::API
 
       render json: { token: token }
     else
-      render json: { message: "invalid credentials" }
+      render json: { message: 'invalid credentials' }
     end
   end
 end
