@@ -10,7 +10,7 @@ module JwtAuthHelper
   end
 
   def encode_user_data(payload)
-    JWT.encode payload, JwtTokenHelper::CreateToken::SECRET, "HS256"
+    JWT.encode payload, ENV["api_secret"], "HS256"
   end
 
   private
