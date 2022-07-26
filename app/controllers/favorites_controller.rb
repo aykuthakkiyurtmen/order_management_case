@@ -6,20 +6,17 @@ class FavoritesController < ActionController::API
 
   def create
     user = User.find(@user.id)
+    @like = user.likes.new(likeable_id: get_likeable_id, likeable_type: params[:likeable_type])
 
-    return render json: no_type_error if get_likeable_id.nil?
+    return render json: errors[:message] if errors[:status] == 'error'
 
-    like = user.likes.new(likeable_id: get_likeable_id, likeable_type: params[:likeable_type])
-
-    return render json: invalid_likeable_type_error unless likeable_type_valid?
-
-    return render json: exist_like_error if exist?(like.likeable_id)
-
-    if !like.save
-      render json: unknown_error
-    else
-      render json: FavoriteSerializer.new(like).serializable_hash, status: :created
+    begin
+      @like.save
+      render json: FavoriteSerializer.new(@like).serializable_hash, status: :created
     end
+  rescue StandardError => e
+    p e.message
+    render(json: { error: unknown_error }, status: :internal_server_error)
   end
 
   private
