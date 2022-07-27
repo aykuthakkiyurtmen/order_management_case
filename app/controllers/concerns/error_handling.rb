@@ -8,17 +8,17 @@ module ErrorHandling
     Like.exists?(likeable_id: likeable_id)
   end
 
-  def errors
+  def valid
     return no_type_error if get_likeable_id.nil?
     return invalid_likeable_type_error unless likeable_type_valid?
     return exist_like_error if exist?(@like.likeable_id)
 
-    valid
+    succeeded
   end
 
   private
 
-  def valid
+  def succeeded
     { status: 'ok' }
   end
 
