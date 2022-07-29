@@ -21,6 +21,7 @@ RSpec.describe Like, type: :model do
 
   it 'likeable_type should be exist' do
     like = Like.new(user_id: user.id, likeable_id: store.id, likeable_type: 'Stores')
+
     expect {like.save}.to raise_error
   end
 end

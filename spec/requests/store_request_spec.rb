@@ -1,7 +1,4 @@
 require 'rails_helper'
-require 'warden'
-
-include Warden::Test::Helpers
 
 RSpec.describe 'Stores', type: :request do
   let(:user) { User.second }
