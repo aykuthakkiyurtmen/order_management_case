@@ -2,7 +2,7 @@ class LikesController < ApplicationController
   skip_before_action :verify_authenticity_token
   before_action :authenticate_user!
   load_and_authorize_resource
-  before_action :set_likes, only: [:index]
+  before_action :set_likes_admin_user!, only: [:index]
 
   def index; end
 
@@ -26,13 +26,18 @@ class LikesController < ApplicationController
 
   private
 
-  def set_likes
+  def set_likes_admin_user!
     if current_user.admin?
-      @like_products = current_user.products.joins(:likes)
-      @like_stores = current_user.stores.joins(:likes)
+      @like_products = current_user.products.joins(:likes).distinct
+      @like_stores = current_user.stores.joins(:likes).distinct
+      return
     end
-    @like_products = Product.joins(:likes)
-    @like_stores = Store.joins(:likes)
+    set_likes_regular_user!
+  end
+
+  def set_likes_regular_user!
+    @like_products = Product.joins(:likes).distinct
+    @like_stores = Store.joins(:likes).distinct
   end
 
   def like_params
